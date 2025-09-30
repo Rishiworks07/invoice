@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Invoice Generator Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --bg-dark: #111827;
+            --bg-light: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --error-color: #ef4444;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .signup-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 2.5rem;
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .logo span {
+            color: var(--primary-color);
+        }
+        .tagline {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .form-group {
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-primary);
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        .login-link {
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .error-message {
+            color: var(--error-color);
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="signup-container">
+        <h1 class="logo">Invoice<span>Pro</span></h1>
+        <p class="tagline">Create your free account</p>
+
+        <form id="signupForm" class="signup-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <p class="login-link">
+            Already have an account? <a href="login.html">Log In</a>
+        </p>
+    </div>
+    
+    <script type="module">
+        // Import functions from the SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsXbVcLOQ_atChONiy-b4HgexYyeBu0Kg",
+            authDomain: "lexikon-90586.firebaseapp.com",
+            projectId: "lexikon-90586",
+            storageBucket: "lexikon-90586.firebasestorage.app",
+            messagingSenderId: "813911908868",
+            appId: "1:813911908868:web:43b81c3bea7b9873e18b51"
+        };
+        // ----------------------------------------------
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Get form elements
+        const signupForm = document.getElementById('signupForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            // Hide previous error messages
+            errorMessageDiv.style.display = 'none';
+
+            // --- Basic Validation ---
+            if (password !== confirmPassword) {
+                showError("Passwords do not match.");
+                return;
+            }
+            if (password.length < 6) {
+                showError("Password should be at least 6 characters long.");
+                return;
+            }
+
+            // --- Firebase Signup ---
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log('Successfully created account for:', user.email);
+                    // Redirect to another page or show a success message
+                    alert('Account created successfully! You can now log in.');
+                    // Example: window.location.href = "/dashboard.html";
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    let friendlyMessage = "An unexpected error occurred. Please try again.";
+
+                    // Provide user-friendly messages for common errors
+                    if (errorCode === 'auth/email-already-in-use') {
+                        friendlyMessage = 'This email address is already in use by another account.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Please enter a valid email address.';
+                    } else if (errorCode === 'auth/weak-password') {
+                        friendlyMessage = 'The password is too weak. Please use a stronger password.';
+                    }
+                    
+                    showError(friendlyMessage);
+                    console.error("Firebase Error:", error);
+                });
+        });
+
+        function showError(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = 'block';
+        }
+
+    </script>
+</body>
+</html>
