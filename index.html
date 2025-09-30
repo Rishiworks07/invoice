@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator Pro - Free & Simple Invoicing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --bg-dark: #111827;
+            --bg-light: #1f2937;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Animated Background */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(315deg, #1e3a8a, #312e81, #111827, #111827);
+            background-size: 400% 400%;
+            animation: gradient-animation 20s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        #hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .typing-text {
+            color: var(--secondary-color);
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 3.5rem;
+            background-color: var(--secondary-color);
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Sections General Styling */
+        section {
+            padding: 6rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .feature-card svg {
+            width: 48px;
+            height: 48px;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+        
+        /* Interactive Demo Section */
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: center;
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .demo-controls h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .demo-invoice {
+            background-color: white;
+            color: #111;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            font-family: monospace;
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .invoice-header h4 {
+            font-size: 1.5rem;
+        }
+
+        .bill-to { margin-bottom: 1rem; }
+        .bill-to p { color: #666; font-size: 0.9rem; }
+        .item-row { display: flex; justify-content: space-between; padding: 0.5rem 0; }
+        .invoice-total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            text-align: right;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        /* Scroll Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1, .typing-cursor {
+                font-size: 2.5rem;
+                height: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background-wrapper"></div>
+    
+    <header class="container">
+        <a href="#" class="logo">Invoice<span>Pro</span></a>
+        <a href="https://invoice-generator-ruddy-eight.vercel.app/" class="btn btn-primary">Launch App</a>
+    </header>
+    
+    <main>
+        <section id="hero">
+            <div class="container hero-content">
+                <h1>Invoicing made <span id="typing-text" class="typing-text">Effortless</span><span class="typing-cursor"></span></h1>
+                <p>Create professional invoices in seconds. Free, no login required, and ready for instant PDF export. Get started now.</p>
+                <a href="#" class="btn btn-primary">Create Your Invoice Now &rarr;</a>
+            </div>
+        </section>
+
+        <section id="features" class="container fade-in-section">
+            <h2 class="section-title">Why Choose Invoice Pro?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4"></path><path d="m18.5 15.5.5-2.5.5 2.5M17 20v-2.5M22 18h-2.5M15 18h-2.5"></path><path d="M20 15.5V13H8v2.5"></path><path d="m14.5 15.5.5-2.5.5 2.5"></path></svg>
+                    <h3>Blazing Fast</h3>
+                    <p>Generate and download your invoice in under a minute. No complex forms, just the essentials.</p>
+                </div>
+                <div class="feature-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    <h3>Modern Templates</h3>
+                    <p>Choose from a selection of clean and professional templates that make your business look great.</p>
+                </div>
+                <div class="feature-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <h3>Privacy Focused</h3>
+                    <p>We respect your privacy. No data is saved on our servers. Your information stays with you.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="container fade-in-section">
+            <h2 class="section-title">See It in Action</h2>
+            <div class="demo-container">
+                <div class="demo-controls">
+                    <h3>Try It Live</h3>
+                    <div class="form-group">
+                        <label for="demoBusinessName">Your Business Name</label>
+                        <input type="text" id="demoBusinessName" value="Pixel Perfect Designs">
+                    </div>
+                    <div class="form-group">
+                        <label for="demoItemName">Item / Service Description</label>
+                        <input type="text" id="demoItemName" value="Website Redesign">
+                    </div>
+                    <div class="form-group">
+                        <label for="demoItemPrice">Price ($)</label>
+                        <input type="number" id="demoItemPrice" value="1500">
+                    </div>
+                </div>
+                <div class="demo-invoice">
+                    <div class="invoice-header">
+                        <h4>INVOICE</h4>
+                        <span id="invoiceDate">2025-09-30</span>
+                    </div>
+                    <div class="bill-to">
+                        <p>BILL TO:</p>
+                        <strong id="invoiceBusinessName">Pixel Perfect Designs</strong>
+                    </div>
+                    <div>
+                        <div class="item-row">
+                            <span id="invoiceItemName">Website Redesign</span>
+                            <strong id="invoiceItemPrice">$1500.00</strong>
+                        </div>
+                    </div>
+                    <div class="invoice-total">
+                        <span>TOTAL:</span>
+                        <span id="invoiceTotal">$1500.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="container text-center fade-in-section">
+             <div class="hero-content">
+                <h2 class="section-title">Ready to Create Your Invoice?</h2>
+                <p>Stop wasting time with complicated software. Get your professional invoice in seconds, for free.</p>
+                <a href="#" class="btn btn-primary">Start Now - It's Free</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Invoice Generator Pro. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Typing Effect ---
+            const typingTextElement = document.getElementById('typing-text');
+            const words = ["Effortless", "Simple", "Professional", "Free"];
+            let wordIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentWord = words[wordIndex];
+                if (isDeleting) {
+                    typingTextElement.textContent = currentWord.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingTextElement.textContent = currentWord.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                if (!isDeleting && charIndex === currentWord.length) {
+                    setTimeout(() => isDeleting = true, 2000);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                }
+                
+                const typeSpeed = isDeleting ? 100 : 200;
+                setTimeout(type, typeSpeed);
+            }
+
+            type();
+
+
+            // --- Interactive Demo ---
+            const demoBusinessName = document.getElementById('demoBusinessName');
+            const demoItemName = document.getElementById('demoItemName');
+            const demoItemPrice = document.getElementById('demoItemPrice');
+            
+            const invoiceBusinessName = document.getElementById('invoiceBusinessName');
+            const invoiceItemName = document.getElementById('invoiceItemName');
+            const invoiceItemPrice = document.getElementById('invoiceItemPrice');
+            const invoiceTotal = document.getElementById('invoiceTotal');
+            const invoiceDate = document.getElementById('invoiceDate');
+
+            function updateInvoice() {
+                invoiceBusinessName.textContent = demoBusinessName.value || 'Your Business';
+                invoiceItemName.textContent = demoItemName.value || 'Service/Item';
+                
+                const price = parseFloat(demoItemPrice.value) || 0;
+                const formattedPrice = `$${price.toFixed(2)}`;
+                invoiceItemPrice.textContent = formattedPrice;
+                invoiceTotal.textContent = formattedPrice;
+            }
+
+            demoBusinessName.addEventListener('input', updateInvoice);
+            demoItemName.addEventListener('input', updateInvoice);
+            demoItemPrice.addEventListener('input', updateInvoice);
+            
+            // Set current date
+            const today = new Date();
+            invoiceDate.textContent = today.toISOString().split('T')[0];
+
+
+            // --- Scroll Fade-In Animation ---
+            const sections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+        });
+    </script>
+
+</body>
+</html>

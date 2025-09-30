@@ -1,0 +1,271 @@
+:root {
+    --bg-dark: #1a202c;
+    --bg-light: #2d3748;
+    --text-primary: #ffffff;
+    --text-secondary: #a0aec0;
+    --border-color: #4a5568;
+    --blue: #3b82f6;
+    --green: #10b981;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    padding: 2rem;
+}
+
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.app-header-left h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.app-header-left p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.theme-switch {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f6e05e; /* Sun/Moon color */
+}
+
+.content-area {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    flex-basis: 100%;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+.line-items-section {
+    margin-top: 2.5rem;
+}
+
+.line-items-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-item-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.line-items-placeholder {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 3rem;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.line-items-placeholder p {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.preview-header p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.download-btn {
+    background-color: var(--green);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.template-style {
+    margin-top: 2rem;
+}
+
+.template-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.template-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.template-option.active {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 1px var(--blue);
+}
+
+.template-option.active svg {
+    color: var(--blue);
+}
+
+.template-option p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.invoice-preview-box {
+    background-color: var(--white);
+    color: var(--black);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.invoice-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.invoice-preview-header h2 {
+    color: var(--black);
+    font-size: 1.75rem;
+    margin: 0;
+}
+
+.invoice-preview-header span {
+    font-size: 0.875rem;
+}
+
+.invoice-id {
+    margin-top: 0.25rem;
+    color: #6b7280;
+}
+
+.invoice-preview-box hr {
+    border: none;
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 1rem 0;
+}
+
+.bill-to p {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.invoice-preview-box table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-preview-box th {
+    text-align: left;
+    color: #6b7280;
+    font-size: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.invoice-preview-box th:nth-child(2),
+.invoice-preview-box th:nth-child(3),
+.invoice-preview-box th:nth-child(4),
+.invoice-preview-box th:nth-child(5) {
+    text-align: right;
+}
