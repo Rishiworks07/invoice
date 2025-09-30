@@ -60,16 +60,24 @@
             100% { background-position: 0% 50%; }
         }
         
-        /* Header */
-        header {
+        /* --- NEW NAVBAR STYLES --- */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(10px);
+            height: 80px;
+            padding: 0 2rem;
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1200px;
+            background: rgba(31, 41, 55, 0.5); /* Semi-transparent background */
+            backdrop-filter: blur(10px); /* The "glass" effect */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(55, 65, 81, 0.8);
+            border-radius: 12px;
             z-index: 100;
         }
 
@@ -77,18 +85,40 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-primary);
+            text-decoration: none;
         }
 
         .logo span {
             color: var(--primary-color);
         }
+        
+        .main-nav-list {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .main-nav-link:link,
+        .main-nav-link:visited {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .main-nav-link:hover,
+        .main-nav-link:active {
+            color: var(--primary-color);
+        }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
 
         .btn-primary {
@@ -100,10 +130,29 @@
             background-color: #2563eb;
             transform: translateY(-2px);
         }
+
+        /* Mobile Navigation */
+        .btn-mobile-nav {
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: none;
+        }
+
+        .icon-mobile-nav {
+            height: 2rem;
+            width: 2rem;
+            color: var(--text-primary);
+        }
+
+        .icon-mobile-nav[name="close-outline"] {
+            display: none;
+        }
         
-        /* Hero Section */
+        /* Hero Section (Updated) */
         #hero {
-            height: 90vh;
+            padding-top: 80px; /* Space for fixed navbar */
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -286,6 +335,52 @@
             .demo-container {
                 grid-template-columns: 1fr;
             }
+
+            .btn-mobile-nav {
+                display: block;
+                z-index: 1000;
+            }
+
+            .main-nav {
+                background: rgba(17, 24, 39, 0.95);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease-in-out;
+                
+                opacity: 0;
+                pointer-events: none;
+                visibility: hidden;
+                transform: translateX(100%);
+            }
+            
+            .nav-open .main-nav {
+                opacity: 1;
+                pointer-events: auto;
+                visibility: visible;
+                transform: translateX(0);
+            }
+
+            .nav-open .icon-mobile-nav[name="close-outline"] { display: block; }
+            .nav-open .icon-mobile-nav[name="menu-outline"] { display: none; }
+
+            .main-nav-list {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            .main-nav-link:link,
+            .main-nav-link:visited {
+                font-size: 1.5rem;
+                color: var(--text-primary);
+            }
         }
         
         @media (max-width: 768px) {
@@ -306,9 +401,20 @@
 <body>
     <div class="background-wrapper"></div>
     
-    <header class="container">
+    <header class="header">
         <a href="#" class="logo">Invoice<span>Pro</span></a>
-        <a href="https://invoice-generator-ruddy-eight.vercel.app/" class="btn btn-primary">Launch App</a>
+        <nav class="main-nav">
+            <ul class="main-nav-list">
+                <li><a href="#features" class="main-nav-link">Features</a></li>
+                <li><a href="#demo" class="main-nav-link">Demo</a></li>
+                <li><a href="#cta" class="main-nav-link">Contact</a></li>
+                <li><a href="https://invoice-generator-ruddy-eight.vercel.app/" class="btn btn-primary">Launch App</a></li>
+            </ul>
+        </nav>
+        <button class="btn-mobile-nav">
+            <ion-icon class="icon-mobile-nav" name="menu-outline"></ion-icon>
+            <ion-icon class="icon-mobile-nav" name="close-outline"></ion-icon>
+        </button>
     </header>
     
     <main>
@@ -316,7 +422,7 @@
             <div class="container hero-content">
                 <h1>Invoicing made <span id="typing-text" class="typing-text">Effortless</span><span class="typing-cursor"></span></h1>
                 <p>Create professional invoices in seconds. Free, no login required, and ready for instant PDF export. Get started now.</p>
-                <a href="#" class="btn btn-primary">Create Your Invoice Now &rarr;</a>
+                <a href="https://invoice-generator-ruddy-eight.vercel.app/" class="btn btn-primary">Create Your Invoice Now &rarr;</a>
             </div>
         </section>
 
@@ -397,9 +503,28 @@
         </div>
     </footer>
 
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
+            // --- Mobile Navigation ---
+            const btnNavEl = document.querySelector(".btn-mobile-nav");
+            const headerEl = document.querySelector(".header");
+            btnNavEl.addEventListener("click", function () {
+                headerEl.classList.toggle("nav-open");
+            });
+            // Close mobile nav when a link is clicked
+            const navLinks = document.querySelectorAll('.main-nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (headerEl.classList.contains('nav-open')) {
+                        headerEl.classList.remove('nav-open');
+                    }
+                });
+            });
+
             // --- Typing Effect ---
             const typingTextElement = document.getElementById('typing-text');
             const words = ["Effortless", "Simple", "Professional", "Free"];
@@ -416,20 +541,16 @@
                     typingTextElement.textContent = currentWord.substring(0, charIndex + 1);
                     charIndex++;
                 }
-
                 if (!isDeleting && charIndex === currentWord.length) {
                     setTimeout(() => isDeleting = true, 2000);
                 } else if (isDeleting && charIndex === 0) {
                     isDeleting = false;
                     wordIndex = (wordIndex + 1) % words.length;
                 }
-                
                 const typeSpeed = isDeleting ? 100 : 200;
                 setTimeout(type, typeSpeed);
             }
-
             type();
-
 
             // --- Interactive Demo ---
             const demoBusinessName = document.getElementById('demoBusinessName');
@@ -460,7 +581,6 @@
             const today = new Date();
             invoiceDate.textContent = today.toISOString().split('T')[0];
 
-
             // --- Scroll Fade-In Animation ---
             const sections = document.querySelectorAll('.fade-in-section');
 
@@ -482,7 +602,6 @@
             sections.forEach(section => {
                 observer.observe(section);
             });
-
         });
     </script>
 
